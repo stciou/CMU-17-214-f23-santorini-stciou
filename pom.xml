@@ -92,7 +92,7 @@
             <arguments>
               <argument>-classpath</argument>
               <classpath />
-              <argument>edu.cmu.cs214.hw3.Game</argument>
+              <argument>edu.cmu.cs214.hw3.Application</argument>
             </arguments>
           </configuration>
         </plugin>
