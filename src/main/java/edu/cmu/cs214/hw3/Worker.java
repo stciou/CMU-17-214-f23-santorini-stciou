@@ -6,6 +6,8 @@ package edu.cmu.cs214.hw3;
 public class Worker {
     private Player owner;
     private Cell currentCell;
+    private Cell previousCell;
+    private int lastLevel;
 
     /**
      * Constructs a new {@code Worker} instance associated with a specific player.
@@ -17,7 +19,28 @@ public class Worker {
     }
 
     /**
+     * Retrieves the {@code Player} who owns this worker.
+     * @return the owner of this worker.
+     */
+    public Cell getCurrentCell() {
+        return currentCell;
+    }
+
+    /**
+     * Retrieves the {@code Player} who owns this worker.
+     * @return the owner of this worker.
+     */
+    public Cell getPreviousCell() {
+        return previousCell;
+    }
+
+    public int getLastLevel() {
+        return lastLevel;
+    }
+
+    /**
      * Moves the worker to a target cell if the move is valid.
+     * This method should be modified to incorporate god card logic.
      *
      * @param targetCell the target {@code Cell} to move the worker to.
      * @return {@code true} if the move is successful; {@code false} otherwise.
@@ -34,6 +57,7 @@ public class Worker {
 
     /**
      * Builds a block or dome on a target cell if the build action is valid.
+     * This method should be modified to incorporate god card logic.
      *
      * @param targetCell the target {@code Cell} to build on.
      * @return {@code true} if the build is successful; {@code false} otherwise.
@@ -52,10 +76,10 @@ public class Worker {
 
     /**
      * Sets the current cell of the worker.
-     *
-     * @param cell the {@code Cell} to set as the current cell of the worker.
+     * @param cell the {@code Cell} to set as the current cell.
      */
     public void setCurrentCell(Cell cell) {
+        this.lastLevel = (this.currentCell != null) ? this.currentCell.getLevel() : 0;
         this.currentCell = cell;
     }
 

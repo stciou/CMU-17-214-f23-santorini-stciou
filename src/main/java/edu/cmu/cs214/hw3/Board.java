@@ -8,6 +8,7 @@ import java.util.List;
  * It consists of a 5x5 grid of {@code Cell} objects.
  */
 public class Board {
+    public static final int BOARD_SIZE = 5;
     private Cell[][] grid = new Cell[5][5];
 
     /**
@@ -78,5 +79,31 @@ public class Board {
             grid[x][y].setWorker(worker);
             worker.setCurrentCell(grid[x][y]);
         }
+    }
+
+    /**
+     * Checks if a move action is allowed by a god card.
+     * This method should be called by the god card's logic.
+     *
+     * @param fromX the x-coordinate of the worker's current position.
+     * @param fromY the y-coordinate of the worker's current position.
+     * @param toX   the x-coordinate of the worker's new position.
+     * @param toY   the y-coordinate of the worker's new position.
+     * @return {@code true} if the move is allowed; {@code false} otherwise.
+     */
+    public boolean isMoveAllowedByGodCard(int fromX, int fromY, int toX, int toY) {
+        return true;
+    }
+
+    /**
+     * Checks if a build action is allowed by a god card.
+     * This method should be called by the god card's logic.
+     *
+     * @param x the x-coordinate of the build position.
+     * @param y the y-coordinate of the build position.
+     * @return {@code true} if the build is allowed; {@code false} otherwise.
+     */
+    public boolean isBuildAllowedByGodCard(int x, int y) {
+        return true;
     }
 }

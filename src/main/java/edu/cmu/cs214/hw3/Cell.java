@@ -26,6 +26,22 @@ public class Cell {
     }
 
     /**
+     * Retrieves the {@code Tower} on the cell.
+     * @return the tower on the cell.
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * Retrieves the {@code Tower} on the cell.
+     * @return the tower on the cell.
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
      * Retrieves the current level of the {@code Tower} on the cell.
      *
      * @return the level of the tower.
@@ -93,17 +109,6 @@ public class Cell {
     public boolean isAdjacentTo(Cell otherCell) {
         int dx = Math.abs(this.x - otherCell.x);
         int dy = Math.abs(this.y - otherCell.y);
-
-        return (dx <= 1 && dy <= 1) && !(dx == 0 && dy == 0);
-    }
-
-    /**
-     * Checks if a {@code Worker} can move to a target cell from the current cell.
-     *
-     * @param targetCell the cell to move the worker to.
-     * @return {@code true} if the worker can move to the target cell; {@code false} otherwise.
-     */
-    public boolean canWorkerMoveTo(Cell targetCell) {
-        return !targetCell.isOccupied() && Math.abs(this.getLevel() - targetCell.getLevel()) <= 1;
+        return dx <= 1 && dy <= 1 && (dx + dy != 0);
     }
 }

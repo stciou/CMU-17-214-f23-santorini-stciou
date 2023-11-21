@@ -1,5 +1,7 @@
 package edu.cmu.cs214.hw3;
 
+import edu.cmu.cs214.hw3.godcards.GodCard;
+
 /**
  * The {@code Player} class represents a player in the game, managing the player's workers and actions.
  */
@@ -7,6 +9,25 @@ public class Player {
     private Worker worker1;
     private Worker worker2;
     private Board board;
+    private GodCard godCard;
+
+    /**
+     * Sets the god card for the player.
+     *
+     * @param godCard the god card to be assigned to the player.
+     */
+    public void setGodCard(GodCard godCard) {
+        this.godCard = godCard;
+    }
+
+    /**
+     * Gets the god card assigned to the player.
+     *
+     * @return the god card of the player.
+     */
+    public GodCard getGodCard() {
+        return godCard;
+    }
 
     /**
      * Constructs a new {@code Player} instance, initializing the workers and associating the player with a game board.
@@ -66,6 +87,7 @@ public class Player {
 
     /**
      * Takes a turn for the player, moving and building with a chosen worker.
+     * This method should be modified to incorporate god card logic.
      *
      * @param workerNum the number of the worker to use (1 or 2).
      * @param moveToX   the x-coordinate to move the worker to.

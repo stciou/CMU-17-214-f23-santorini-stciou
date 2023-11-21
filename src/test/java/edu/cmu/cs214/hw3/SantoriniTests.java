@@ -60,7 +60,7 @@ public class SantoriniTests {
     @Test
     public void testGamePlayWinningSequence() {
         Game game = new Game();
-        Player player1 = game.player1;
+        Player player1 = game.getPlayer1();
 
         assertTrue(player1.takeTurn(1, 1, 0, 1, 1));
         assertTrue(player1.takeTurn(1, 2, 0, 2, 1));
@@ -71,7 +71,7 @@ public class SantoriniTests {
     @Test
     public void testGamePlayInvalidSequence() {
         Game game = new Game();
-        Player player1 = game.player1;
+        Player player1 = game.getPlayer1();
 
         assertFalse(player1.takeTurn(1, 5, 5, 1, 1));
     }

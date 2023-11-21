@@ -9,9 +9,17 @@ import java.util.Scanner;
  */
 public class Game {
     private Board board;
-    Player player1;
+    private Player player1;
     private Player player2;
     private Player currentPlayer;
+
+    /**
+     * Returns the game board.
+     * @return the game board.
+     */
+    public Player getPlayer1() {
+        return player1;
+    }
 
     /**
      * Constructs a new {@code Game} instance, initializing the board and players,
