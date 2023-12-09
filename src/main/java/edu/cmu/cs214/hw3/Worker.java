@@ -22,6 +22,14 @@ public class Worker {
      * Retrieves the {@code Player} who owns this worker.
      * @return the owner of this worker.
      */
+    public Player getOwner() {
+        return owner;
+    }
+
+    /**
+     * Retrieves the {@code Player} who owns this worker.
+     * @return the owner of this worker.
+     */
     public Cell getCurrentCell() {
         return currentCell;
     }
@@ -63,7 +71,10 @@ public class Worker {
      * @return {@code true} if the build is successful; {@code false} otherwise.
      */
     public boolean build(Cell targetCell) {
-        if (isValidBuild(targetCell)) {
+        if (owner.getGodCard() != null && !owner.getGodCard().modifyBuild(this, targetCell)) {
+            return false;
+        }
+            if (isValidBuild(targetCell)) {
             if (targetCell.getLevel() == 3) {
                 targetCell.placeDome();
             } else {
@@ -76,7 +87,7 @@ public class Worker {
 
     /**
      * Sets the current cell of the worker.
-     * @param cell the {@code Cell} to set as the current cell.
+     * @param cell the cell to set.
      */
     public void setCurrentCell(Cell cell) {
         this.lastLevel = (this.currentCell != null) ? this.currentCell.getLevel() : 0;
@@ -113,5 +124,13 @@ public class Worker {
      */
     public boolean hasWon() {
         return currentCell.getLevel() == 3;
+    }
+
+    /**
+     * Sets the last level of the worker.
+     * @param level the level to set.
+     */
+    public void setLastLevel(int level) {
+        this.lastLevel = level;
     }
 }

@@ -32,4 +32,9 @@ public interface GodCard {
      * @return {@code true} if the player has won according to the god card's win condition; {@code false} otherwise.
      */
     boolean checkWinCondition(Cell currentCell);
+
+    /**
+     * Resets any additional build flags at the end of the turn.
+     */
+    void resetAdditionalBuild();
 }

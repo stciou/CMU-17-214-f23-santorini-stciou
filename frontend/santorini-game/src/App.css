@@ -2,23 +2,24 @@ body {
   font-family: 'Arial', sans-serif;
   background-color: #f0f0f0;
   margin: 0;
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .App {
   text-align: center;
   background-color: #fff;
-  padding: 20px;
+  padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .board {
   display: grid;
-  grid-template-columns: repeat(5, 80px);
+  grid-template-columns: repeat(5, 1fr);
   grid-gap: 10px;
   margin-bottom: 20px;
   background-color: #f8f8f8;
@@ -30,26 +31,82 @@ body {
 .cell {
   width: 80px;
   height: 80px;
+  aspect-ratio: 1;
   border: 3px solid #333;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: #333;
   background-color: #eaeaea;
   cursor: pointer;
   transition: transform 0.3s, background-color 0.3s, border-color 0.3s;
 }
 
-.cell:hover {
+.cell.valid-action {
+  background-color: #add8e6;
+  border-color: #007bff;
+}
+
+.cell:hover, .cell:focus {
   background-color: #d4d4d4;
   transform: translateY(-2px);
 }
 
 .game-status {
   margin-bottom: 20px;
-  font-size: 20px;
+  font-size: 1.25rem;
   color: #333;
+}
+
+.phase-prompt {
+  background-color: #f8f8f8;
+  border: 2px solid #007bff;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.phase-prompt p {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #007bff;
+}
+
+.phase-prompt button {
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  background-color: #28a745;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.phase-prompt button:hover {
+  background-color: #218838;
+}
+
+.error-message {
+  background-color: #ffcccc;
+  color: red;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.error-message button {
+  margin-left: 10px;
+  padding: 0.5rem 1rem;
+  background-color: #28a745;
+}
+
+.error-message button:hover {
+  background-color: #218838;
 }
 
 button {
@@ -58,7 +115,7 @@ button {
   border-radius: 5px;
   background-color: #007bff;
   color: white;
-  font-size: 18px;
+  font-size: 1.125rem;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
   margin-right: 10px;
@@ -70,22 +127,25 @@ button:hover {
 }
 
 @media (max-width: 600px) {
+  .App {
+    max-height: 85vh;
+    padding: 1rem;
+  }
+
   .board {
-    grid-template-columns: repeat(5, 60px);
+    grid-template-columns: repeat(5, 48px);
   }
 
   .cell {
-    width: 60px;
-    height: 60px;
-    font-size: 16px;
+    font-size: 0.9rem;
   }
 
   .game-status {
-    font-size: 18px;
+    font-size: 1rem;
   }
 
   button {
-    padding: 12px 18px;
-    font-size: 16px;
+    padding: 10px 15px;
+    font-size: 0.9rem;
   }
 }

@@ -1,5 +1,6 @@
 package edu.cmu.cs214.hw3;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * It also returns the game state to the client.
  */
 @RestController
-@RequestMapping("/api/game")
+@RequestMapping("/api")
 public class GameController {
 
     private Game game;
@@ -40,18 +41,56 @@ public class GameController {
     }
 
     @PostMapping("/move")
-    public ResponseEntity<?> moveWorker(@RequestParam int workerId, @RequestParam int x, @RequestParam int y) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Game> move(@RequestBody MoveRequest moveRequest) {
+        boolean moveSuccess = game.performMove(moveRequest.getX(), moveRequest.getY(), moveRequest.getPlayer());
+
+        if (moveSuccess) {
+            return ResponseEntity.ok(game);
+        } else {
+            return ResponseEntity.badRequest().body(game);
+        }
     }
 
+    @PostMapping("/performMove")
+    public ResponseEntity<?> performMove(@RequestBody MoveRequest moveRequest) {
+        boolean success = game.performMove(moveRequest.getX(), moveRequest.getY(), moveRequest.getPlayer());
+
+        if (success) {
+            return ResponseEntity.ok(game);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Move not possible");
+        }
+    }
+
+    @GetMapping("/checkWinner")
+    public ResponseEntity<String> checkWinner() {
+        String winner = game.checkWinner();
+        if (winner != null) {
+            return ResponseEntity.ok(winner);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+    
     @PostMapping("/build")
-    public ResponseEntity<?> buildBlock(@RequestParam int x, @RequestParam int y) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Game> build(@RequestBody BuildRequest buildRequest) { 
+        boolean buildSuccess = game.performBuild(buildRequest.getX(), buildRequest.getY(), buildRequest.getPlayer());
+
+        if (buildSuccess) {
+            return ResponseEntity.ok(game);
+        } else {
+            return ResponseEntity.badRequest().body(game);
+        }
     }
 
     @PostMapping("/selectGodCard")
-    public ResponseEntity<?> selectGodCard(@RequestParam String playerName, @RequestParam String godCardName) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> selectGodCard(@RequestBody GodCardSelectionRequest request) {
+        boolean success = game.selectGodCard(request.getPlayerName(), request.getGodCardName());
+        if (success) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("God card selection failed");
+        }
     }
 
     @GetMapping("/state")

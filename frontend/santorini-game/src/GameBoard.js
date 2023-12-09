@@ -2,25 +2,21 @@ import React from 'react';
 
 const GameBoard = ({ gameState, onCellClick }) => {
   const renderCell = (x, y) => {
-    const renderCellContent = (cellState) => {
-      let content = '';
-      for (let i = 0; i < cellState.level; i++) {
-        content += '[[';
-      }
-      if (cellState.hasWorker) {
-        content += ` ${cellState.worker} `;
-      }
-      for (let i = 0; i < cellState.level; i++) {
-        content += ']]';
-      }
-      return content;
-    };
-
     const cellState = gameState.board[x][y];
-    const cellContent = renderCellContent(cellState);
+    const isWorker = cellState.hasWorker;
+    const level = cellState.level;
+    const isDome = cellState.hasDome;
+    const worker = isWorker ? cellState.worker : ' ';
+    const cellContent = isDome ? `[[[O]]]` : `[${'['.repeat(level)}${worker}${']'.repeat(level)}]`;
+
+    const isValidAction = gameState.validActions.some(action => action.x === x && action.y === y);
+    const cellClass = `cell ${isValidAction ? 'valid-action' : ''}`;
 
     return (
-      <button className="cell" onClick={() => onCellClick(x, y)} disabled={cellState.isOccupied}>
+      <button 
+        className={cellClass} 
+        onClick={() => isValidAction && onCellClick(x, y)}
+      >
         {cellContent}
       </button>
     );

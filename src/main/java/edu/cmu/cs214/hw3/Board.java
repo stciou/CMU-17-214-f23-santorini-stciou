@@ -68,6 +68,22 @@ public class Board {
     }
 
     /**
+     * Checks if a build action at the specified coordinates is valid.
+     *
+     * @param x the x-coordinate.
+     * @param y the y-coordinate.
+     * @return true if the build action is valid, false otherwise.
+     */
+    public boolean isValidBuildPosition(int x, int y) {
+        if (x < 0 || x >= 5 || y < 0 || y >= 5) {
+            return false;
+        }
+        
+        Cell cell = grid[x][y];
+        return !cell.isOccupied() && !cell.hasDome();
+    }
+
+    /**
      * Places a {@code Worker} on the specified grid position if the position is valid and not occupied.
      *
      * @param x      the x-coordinate of the cell.
@@ -106,4 +122,14 @@ public class Board {
     public boolean isBuildAllowedByGodCard(int x, int y) {
         return true;
     }
+
+    /**
+     * Checks if the given coordinate is within the board boundaries.
+     *
+     * @param coordinate The coordinate to check.
+     * @return True if the coordinate is valid, false otherwise.
+     */
+    public boolean isValidCoordinate(int coordinate) {
+        return coordinate >= 0 && coordinate < BOARD_SIZE;
+    }    
 }

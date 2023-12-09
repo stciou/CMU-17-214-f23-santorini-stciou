@@ -10,28 +10,56 @@ import edu.cmu.cs214.hw3.*;
 public class Minotaur implements GodCard {
     private Board board;
 
+    /**
+     * Constructs an instance of {@code Minotaur} with a reference to the game board.
+     * @param board The game board.
+     */
     public Minotaur(Board board) {
         this.board = board;
     }
 
+    /**
+     * Does not modify the move action.
+     * @param worker The worker attempting to move.
+     * @param targetCell The target cell where the worker wants to move.
+     * @return {@code true} if the move is allowed and successful; {@code false} otherwise.
+     */
     @Override
     public boolean modifyMove(Worker worker, Cell targetCell) {
         if (targetCell.isOccupied() && targetCell.getWorker() != worker) {
             Cell behindCell = calculateBehindCell(targetCell, worker.getCurrentCell());
             if (behindCell != null && !behindCell.isOccupied() && behindCell.getLevel() <= 3) {
-                targetCell.getWorker().setCurrentCell(behindCell);
+                Worker opponentWorker = targetCell.getWorker();
+    
+                opponentWorker.setCurrentCell(behindCell);
+                behindCell.setWorker(opponentWorker);
+    
                 worker.setCurrentCell(targetCell);
+                targetCell.setWorker(worker);
+    
                 return true;
             }
         }
         return false;
     }
+    
 
+    /**
+     * Does not modify the build action.
+     * @param worker The worker attempting to build.
+     * @param targetCell The target cell where the worker wants to build.
+     * @return {@code true} if the build is allowed and successful; {@code false} otherwise.
+     */
     @Override
     public boolean modifyBuild(Worker worker, Cell targetCell) {
         return true;
     }
 
+    /**
+     * Checks if the player has won by moving up two levels.
+     * @param currentCell The current cell of the worker.
+     * @return {@code true} if the player has won; {@code false} otherwise.
+     */
     @Override
     public boolean checkWinCondition(Cell currentCell) {
         return false;
@@ -48,18 +76,14 @@ public class Minotaur implements GodCard {
         int dy = targetCell.getY() - currentCell.getY();
         int behindX = targetCell.getX() + dx;
         int behindY = targetCell.getY() + dy;
-        if (isValidCoordinate(behindX) && isValidCoordinate(behindY)) {
+    
+        if (board.isValidCoordinate(behindX) && board.isValidCoordinate(behindY)) {
             return board.getCell(behindX, behindY);
         }
         return null;
-    }
+    }    
 
-    /**
-     * Checks if the given coordinate is within the board boundaries.
-     * @param coordinate The coordinate to check.
-     * @return True if the coordinate is valid, false otherwise.
-     */
-    private boolean isValidCoordinate(int coordinate) {
-        return coordinate >= 0 && coordinate < Board.BOARD_SIZE;
+    @Override
+    public void resetAdditionalBuild() {
     }
 }

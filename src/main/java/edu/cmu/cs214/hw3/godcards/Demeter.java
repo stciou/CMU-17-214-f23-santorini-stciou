@@ -8,12 +8,14 @@ import edu.cmu.cs214.hw3.*;
  */
 public class Demeter implements GodCard {
     private boolean usedAdditionalBuild;
+    private Cell lastBuildCell;
 
     /**
      * Constructs a new {@code Demeter} instance.
      */
     public Demeter() {
         this.usedAdditionalBuild = false;
+        this.lastBuildCell = null;
     }
 
     @Override
@@ -24,7 +26,11 @@ public class Demeter implements GodCard {
     @Override
     public boolean modifyBuild(Worker worker, Cell targetCell) {
         if (!usedAdditionalBuild) {
+            if (lastBuildCell != null && lastBuildCell.equals(targetCell)) {
+                return false;
+            }
             usedAdditionalBuild = true;
+            lastBuildCell = targetCell;
             return true;
         }
         return false;
@@ -38,7 +44,9 @@ public class Demeter implements GodCard {
     /**
      * Resets the additional build flag at the end of the turn.
      */
+    @Override
     public void resetAdditionalBuild() {
         this.usedAdditionalBuild = false;
+        this.lastBuildCell = null;
     }
 }
